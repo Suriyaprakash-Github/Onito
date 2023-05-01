@@ -200,7 +200,11 @@ const UserForm = () => {
                     Email
                   </Form.Label>
                   <Col>
-                    <Form.Control {...register("email")} id="email" />
+                    <Form.Control
+                      {...register("email")}
+                      id="email"
+                      placeholder="Enter email ID"
+                    />
                   </Col>
                 </Form.Group>
               </Col>
@@ -213,6 +217,7 @@ const UserForm = () => {
                     <Form.Control
                       {...register("emergencyNumber")}
                       id="emergencyNumber"
+                      placeholder="Enter Mobile Number"
                     />
                   </Col>
                 </Form.Group>
@@ -231,7 +236,11 @@ const UserForm = () => {
                     Address
                   </Form.Label>
                   <Col>
-                    <Form.Control {...register("address")} id="address" />
+                    <Form.Control
+                      {...register("address")}
+                      id="address"
+                      placeholder="Enter your Address"
+                    />
                   </Col>
                 </Form.Group>
               </Col>
@@ -242,6 +251,7 @@ const UserForm = () => {
                   </Form.Label>
                   <Col>
                     <Form.Select {...register("state")} id="state">
+                      <option value="">Choose your State</option>
                       <option value="AN">Andaman and Nicobar Islands</option>
                       <option value="AP">Andhra Pradesh</option>
                       <option value="AR">Arunachal Pradesh</option>
@@ -289,7 +299,11 @@ const UserForm = () => {
                     City
                   </Form.Label>
                   <Col>
-                    <Form.Control {...register("city")} id="city" />
+                    <Form.Control
+                      {...register("city")}
+                      id="city"
+                      placeholder="City/Town/Village"
+                    />
                   </Col>
                 </Form.Group>
               </Col>
@@ -316,7 +330,11 @@ const UserForm = () => {
                     Pincode
                   </Form.Label>
                   <Col>
-                    <Form.Control {...register("pincode")} id="pincode" />
+                    <Form.Control
+                      {...register("pincode")}
+                      id="pincode"
+                      placeholder="Enter Pincode Number"
+                    />
                   </Col>
                 </Form.Group>
               </Col>
@@ -338,35 +356,51 @@ const UserForm = () => {
                       type="text"
                       {...register("occupation")}
                       id="occupation"
+                      placeholder="Enter your Occupation"
                     />
                   </Col>
                 </Form.Group>
               </Col>
-              <Col sm={3}>
+              <Col sm={2}>
                 <Form.Group as={Row}>
                   <Form.Label sm={4} column htmlFor="religion">
                     Religion
                   </Form.Label>
                   <Col>
-                    <Form.Control
+                    <Form.Select
                       type="text"
                       {...register("religion")}
                       id="religion"
-                    />
+                    >
+                      <option value="">Choose Religion</option>
+                      <option value="hindu">Hindu</option>
+                      <option value="muslim">Muslim</option>
+                      <option value="christian">Christian</option>
+                      <option value="sikh">Sikh</option>
+                      <option value="buddhist">Buddhist</option>
+                      <option value="jain">Jain</option>
+                      <option value="others">Others</option>
+                    </Form.Select>
                   </Col>
                 </Form.Group>
               </Col>
-              <Col sm={3}>
+              <Col sm={4}>
                 <Form.Group as={Row}>
-                  <Form.Label sm={6} column htmlFor="maritalStatus">
+                  <Form.Label sm={5} column htmlFor="maritalStatus">
                     Marital Status
                   </Form.Label>
                   <Col>
-                    <Form.Control
+                    <Form.Select
                       type="text"
                       {...register("maritalStatus")}
                       id="maritalStatus"
-                    />
+                    >
+                      <option value="">Choose Marital Status</option>
+                      <option value="single">Single</option>
+                      <option value="married">Married</option>
+                      <option value="widowed">Widowed</option>
+                      <option vlaue="divorced">Divorced</option>
+                    </Form.Select>
                   </Col>
                 </Form.Group>
               </Col>
@@ -376,11 +410,17 @@ const UserForm = () => {
                     Blood Group
                   </Form.Label>
                   <Col>
-                    <Form.Control
-                      type="text"
-                      {...register("blood")}
-                      id="blood"
-                    />
+                    <Form.Select type="text" {...register("blood")} id="blood">
+                      <option value="">Choose Blood Group</option>
+                      <option value="A+">A+</option>
+                      <option value="A-">A-</option>
+                      <option value="B+">B+</option>
+                      <option value="B-">B-</option>
+                      <option value="O+">O+</option>
+                      <option value="O-">O-</option>
+                      <option value="AB+">AB+</option>
+                      <option value="AB-">AB-</option>
+                    </Form.Select>
                   </Col>
                 </Form.Group>
               </Col>
