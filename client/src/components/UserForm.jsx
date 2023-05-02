@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
@@ -68,8 +69,30 @@ const UserForm = () => {
 
   const formSubmitHandler = (data) => {
     console.log(data);
+    axios.post("http://localhost:4000/user/newUser", {
+      name: data.name,
+      age: data.age,
+      sex: data.sex,
+      mobile: data.mobile,
+      idtype: data.idtype,
+      idvalue: data.idvalue,
+      guardianName: data.guardianName,
+      email: data.email,
+      emergencyNumber: data.emergencyNumber,
+      address: data.address,
+      state: data.state,
+      city: data.city,
+      country: data.country,
+      pincode: data.pincode,
+      occupation: data.occupation,
+      religion: data.religion,
+      maritalStatus: data.maritalStatus,
+      blood: data.blood,
+      nationality: data.nationality,
+    });
     reset();
   };
+
   const cancelHandler = () => {
     reset();
   };
@@ -539,7 +562,7 @@ const UserForm = () => {
             >
               Cancel
             </Button>
-            <Button variant="success" type="submit" onClick={formSubmitHandler}>
+            <Button variant="success" type="submit">
               Submit
             </Button>
           </section>
