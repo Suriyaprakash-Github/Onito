@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -20,19 +20,22 @@ const schema = yup.object().shape({
     .string()
     .matches("^[98765]{1}[0-9]{9}$", { excludeEmptyString: true }),
   idtype: yup.string().notRequired(),
-  idvalue: yup.string().when("idtype", {
-    is: (val) => val === "aadhaar",
-    then: (schema) =>
-      schema.matches("[0-9]{12}", {
-        message: "enter correct aadhaar details",
-        excludeEmptyString: true,
-      }),
-    otherwise: (schema) =>
-      schema.matches("[A-Z]{5}[0-9]{4}[A-Z]{1}", {
-        message: "Enter details correctly",
-        excludeEmptyString: true,
-      }),
-  }),
+  idvalue: yup
+    .string()
+    .uppercase()
+    .when("idtype", {
+      is: (val) => val === "aadhaar",
+      then: (schema) =>
+        schema.matches("[0-9]{12}", {
+          message: "enter correct aadhaar details",
+          excludeEmptyString: true,
+        }),
+      otherwise: (schema) =>
+        schema.matches("[A-Z]{5}[0-9]{4}[A-Z]{1}", {
+          message: "Enter details correctly",
+          excludeEmptyString: true,
+        }),
+    }),
   guardianName: yup.string(),
   email: yup.string().email(),
   emergencyNumber: yup
@@ -53,6 +56,7 @@ const schema = yup.object().shape({
 const UserForm = () => {
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -73,44 +77,76 @@ const UserForm = () => {
 
             <Row className="row">
               <Col sm={5}>
-                <Form.Group as={Row}>
-                  <Form.Label column sm={2} htmlFor="name">
+                <Form.Group as={Row} controlId="name">
+                  <Form.Label column sm={2}>
                     Name
                   </Form.Label>
                   <Col>
-                    <Form.Control
-                      {...register("name")}
-                      id="name"
-                      placeholder="Enter Name"
+                    <Controller
+                      name="name"
+                      control={control}
+                      render={({ field }) => (
+                        <Form.Control
+                          {...register("name")}
+                          isInvalid={errors.name}
+                          placeholder="Enter Name"
+                        />
+                      )}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      Please enter your name.
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group as={Row}>
-                  <Form.Label column sm={2} htmlFor="age">
+                <Form.Group as={Row} controlId="age">
+                  <Form.Label column sm={2}>
                     Age
                   </Form.Label>
                   <Col>
-                    <Form.Control
-                      {...register("age")}
-                      id="age"
-                      placeholder="Age in Years"
+                    <Controller
+                      name="age"
+                      control={control}
+                      render={({ field }) => (
+                        <Form.Control
+                          {...register("age")}
+                          isInvalid={errors.age}
+                          placeholder="Age in Years"
+                        />
+                      )}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      Please enter your age in number.
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group as={Row}>
-                  <Form.Label sm={2} column htmlFor="sex">
+                <Form.Group as={Row} controlId={"sex"}>
+                  <Form.Label sm={2} column>
                     Sex
                   </Form.Label>
                   <Col>
-                    <Form.Select {...register("sex")} id="sex">
-                      <option value="">Enter Sex</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </Form.Select>
+                    <Controller
+                      name="age"
+                      control={control}
+                      render={({ field }) => (
+                        <Form.Select
+                          {...register("sex")}
+                          id="sex"
+                          isInvalid={errors.sex}
+                        >
+                          <option value="">Enter Sex</option>
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                          <option value="others">Others</option>
+                        </Form.Select>
+                      )}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please enter your gender.
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
               </Col>
@@ -118,16 +154,25 @@ const UserForm = () => {
 
             <Row>
               <Col sm={5}>
-                <Form.Group as={Row}>
-                  <Form.Label sm={2} column htmlFor="mobile">
+                <Form.Group as={Row} controlId="mobile">
+                  <Form.Label sm={2} column>
                     Mobile
                   </Form.Label>
                   <Col sm={7}>
-                    <Form.Control
-                      {...register("mobile")}
-                      id="mobile"
-                      placeholder="Enter Mobile"
+                    <Controller
+                      name="age"
+                      control={control}
+                      render={({ field }) => (
+                        <Form.Control
+                          {...register("mobile")}
+                          isInvalid={errors.mobile}
+                          placeholder="Enter Mobile"
+                        />
+                      )}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      Please enter correct mobile number.
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
               </Col>
@@ -146,13 +191,22 @@ const UserForm = () => {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group as={Row}>
+                <Form.Group as={Row} controlId={"idvalue"}>
                   <Col>
-                    <Form.Control
-                      {...register("idvalue")}
-                      placeholder="Enter Govt ID"
-                      id="idvalue"
+                    <Controller
+                      name="idvalue"
+                      control={control}
+                      render={({ field }) => (
+                        <Form.Control
+                          {...register("idvalue")}
+                          placeholder="Enter Govt ID"
+                          isInvalid={errors.idvalue}
+                        />
+                      )}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      Please enter correct details
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
               </Col>
@@ -195,30 +249,46 @@ const UserForm = () => {
                 </Form.Group>
               </Col>
               <Col sm={3}>
-                <Form.Group as={Row}>
-                  <Form.Label column sm={2} htmlFor="email">
+                <Form.Group as={Row} controlId="email">
+                  <Form.Label column sm={2}>
                     Email
                   </Form.Label>
                   <Col>
-                    <Form.Control
-                      {...register("email")}
-                      id="email"
-                      placeholder="Enter email ID"
+                    <Controller
+                      name="email"
+                      control={control}
+                      render={({ field }) => (
+                        <Form.Control
+                          {...register("email")}
+                          isInvalid={errors.email}
+                          placeholder="Enter email ID"
+                        />
+                      )}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      Please enter correct email
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
               </Col>
               <Col sm={4}>
-                <Form.Group as={Row}>
-                  <Form.Label column htmlFor="emergencyNumber">
-                    Emergency Contact Number
-                  </Form.Label>
+                <Form.Group as={Row} controlId="emergencyNumber">
+                  <Form.Label column>Emergency Contact Number</Form.Label>
                   <Col>
-                    <Form.Control
-                      {...register("emergencyNumber")}
-                      id="emergencyNumber"
-                      placeholder="Enter Mobile Number"
+                    <Controller
+                      name="emergencyNumber"
+                      control={control}
+                      render={({ field }) => (
+                        <Form.Control
+                          {...register("emergencyNumber")}
+                          isInvalid={errors.emergencyNumber}
+                          placeholder="Enter Mobile Number"
+                        />
+                      )}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      Please enter correct mobile number.
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
               </Col>
@@ -325,16 +395,25 @@ const UserForm = () => {
                 </Form.Group>
               </Col>
               <Col sm={5}>
-                <Form.Group as={Row}>
-                  <Form.Label column sm={2} htmlFor="pincode">
+                <Form.Group as={Row} controlId="pincode">
+                  <Form.Label column sm={2}>
                     Pincode
                   </Form.Label>
                   <Col>
-                    <Form.Control
-                      {...register("pincode")}
-                      id="pincode"
-                      placeholder="Enter Pincode Number"
+                    <Controller
+                      name="pincode"
+                      control={control}
+                      render={({ field }) => (
+                        <Form.Control
+                          {...register("pincode")}
+                          isInvalid={errors.pincode}
+                          placeholder="Enter Pincode Number"
+                        />
+                      )}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      Please enter correct pincode.
+                    </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
               </Col>
