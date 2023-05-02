@@ -57,6 +57,7 @@ const UserForm = () => {
   const {
     register,
     control,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -67,7 +68,12 @@ const UserForm = () => {
 
   const formSubmitHandler = (data) => {
     console.log(data);
+    reset();
   };
+  const cancelHandler = () => {
+    reset();
+  };
+
   return (
     <>
       <Container className="formContainer">
@@ -80,6 +86,7 @@ const UserForm = () => {
                 <Form.Group as={Row} controlId="name">
                   <Form.Label column sm={2}>
                     Name
+                    <span style={{ color: "red" }}>*</span>
                   </Form.Label>
                   <Col>
                     <Controller
@@ -103,6 +110,7 @@ const UserForm = () => {
                 <Form.Group as={Row} controlId="age">
                   <Form.Label column sm={2}>
                     Age
+                    <span style={{ color: "red" }}>*</span>
                   </Form.Label>
                   <Col>
                     <Controller
@@ -126,6 +134,7 @@ const UserForm = () => {
                 <Form.Group as={Row} controlId={"sex"}>
                   <Form.Label sm={2} column>
                     Sex
+                    <span style={{ color: "red" }}>*</span>
                   </Form.Label>
                   <Col>
                     <Controller
@@ -394,7 +403,7 @@ const UserForm = () => {
                   </Col>
                 </Form.Group>
               </Col>
-              <Col sm={5}>
+              <Col sm={4}>
                 <Form.Group as={Row} controlId="pincode">
                   <Form.Label column sm={2}>
                     Pincode
@@ -465,7 +474,7 @@ const UserForm = () => {
               </Col>
               <Col sm={4}>
                 <Form.Group as={Row}>
-                  <Form.Label sm={5} column htmlFor="maritalStatus">
+                  <Form.Label sm={4} column htmlFor="maritalStatus">
                     Marital Status
                   </Form.Label>
                   <Col>
@@ -485,7 +494,7 @@ const UserForm = () => {
               </Col>
               <Col sm={3}>
                 <Form.Group as={Row}>
-                  <Form.Label sm={6} column htmlFor="blood">
+                  <Form.Label sm={5} column htmlFor="blood">
                     Blood Group
                   </Form.Label>
                   <Col>
@@ -507,7 +516,7 @@ const UserForm = () => {
             <Row>
               <Col sm={4}>
                 <Form.Group as={Row}>
-                  <Form.Label column htmlFor="naionality">
+                  <Form.Label column sm={3} htmlFor="naionality">
                     Nationality
                   </Form.Label>
                   <Col>
@@ -523,7 +532,16 @@ const UserForm = () => {
             </Row>
           </Container>
           <section className="d-flex justify-content-end">
-            <Button type="submit">Submit</Button>
+            <Button
+              onClick={cancelHandler}
+              variant="outline-danger"
+              style={{ marginRight: "1rem" }}
+            >
+              Cancel
+            </Button>
+            <Button variant="success" type="submit" onClick={formSubmitHandler}>
+              Submit
+            </Button>
           </section>
         </Form>
       </Container>
