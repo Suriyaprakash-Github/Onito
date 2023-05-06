@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
@@ -99,6 +100,11 @@ const UserForm = () => {
 
   return (
     <>
+      <Button>
+        <Link to="/userlist" style={{ color: "white", textDecoration: "none" }}>
+          User List
+        </Link>
+      </Button>
       <Container className="formContainer">
         <Form onSubmit={handleSubmit(formSubmitHandler)}>
           <Container>

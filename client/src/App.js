@@ -1,19 +1,15 @@
 import "./App.css";
 import UserForm from "./components/UserForm";
-import axios from "axios";
+import { Route, Routes } from "react-router-dom";
+import UserList from "./components/UserList";
 
 function App() {
-  const getUserHandler = async () => {
-    axios
-      .get("http://localhost:4000/user/getUsers")
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
-  };
   return (
     <>
-      <UserForm />
-
-      <button onClick={getUserHandler}>Get Users</button>
+      <Routes>
+        <Route path="/userlist" element={<UserList />} />
+        <Route path="/" element={<UserForm />} />
+      </Routes>
     </>
   );
 }
